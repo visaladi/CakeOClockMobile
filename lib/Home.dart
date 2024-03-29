@@ -1,6 +1,9 @@
+// Add necessary imports
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package
 import 'package:cakeoclock/About us.dart';
+import 'package:cakeoclock/WebView.dart';
 
 void main() {
   runApp(MyApp());
@@ -109,7 +112,14 @@ class HomePage extends StatelessWidget {
                 RoundedButton(
                   text: 'Bake It',
                   onPressed: () {
-                    // Implement Bake It action
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WebViewPage(
+                          url: 'https://cakeoclockwebclient.azurewebsites.net/',
+                        ),
+                      ),
+                    );
                   },
                 ),
                 SizedBox(height: 20), // Add space between buttons
@@ -168,5 +178,13 @@ class RoundedButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void _launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
