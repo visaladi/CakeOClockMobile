@@ -1,4 +1,8 @@
 // Add necessary imports
+import 'package:cakeoclock/Homeweb.dart';
+import 'package:cakeoclock/Login.dart';
+import 'package:cakeoclock/Menu.dart';
+import 'package:cakeoclock/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package
@@ -33,11 +37,20 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.login),
             onPressed: () {
               // Implement login action
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(
+                    url: 'https://cakeoclockwebclient.azurewebsites.net/login',
+                  ),
+                ),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.home),
             onPressed: () {
+              Navigator.pop(context);
               // Implement home button action
             },
           ),
@@ -50,12 +63,28 @@ class HomePage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomewebPage(
+                      url: 'https://cakeoclockwebclient.azurewebsites.net/',
+                    ),
+                  ),
+                );
                 // Implement home action
               },
             ),
             IconButton(
               icon: Icon(Icons.shopping_cart),
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrdersPage(
+                      url: 'https://cakeoclockwebclient.azurewebsites.net/tracking',
+                    ),
+                  ),
+                );
                 // Implement orders action
               },
             ),
@@ -126,6 +155,15 @@ class HomePage extends StatelessWidget {
                 RoundedButton(
                   text: 'Menu',
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MenuPage(
+                          url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
+                        ),
+                      ),
+                    );
+
                     // Implement Another One action
                   },
                 ),
@@ -163,7 +201,7 @@ class RoundedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.grey[800], // Button color
+        backgroundColor: Colors.grey[800], // Button color
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30), // Rounded edges
