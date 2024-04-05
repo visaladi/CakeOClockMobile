@@ -1,37 +1,31 @@
-// Add necessary imports
-import 'package:cakeoclock/Homeweb.dart';
-import 'package:cakeoclock/Login.dart';
-import 'package:cakeoclock/Menu.dart';
-import 'package:cakeoclock/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package
-import 'package:cakeoclock/About us.dart';
-import 'package:cakeoclock/WebView.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
-    );
-  }
-}
+import 'package:url_launcher/url_launcher.dart';
+import 'Homeweb.dart';
+import 'Login.dart';
+import 'Menu.dart';
+import 'Orders.dart';
+import 'About Us.dart';
+import 'WebView.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cake O' clock"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Image.asset(
+              'lib/images/logo.png', // Adjust the path according to your image location
+              fit: BoxFit.contain,
+              height: 40,
+              width: 40, // Adjust the height as needed
+            ),
+            SizedBox(width: 68), // Add some space between logo and text
+            Text("Cake O' Clock"),
+          ],
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.login),
@@ -105,10 +99,11 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 5), // Add space for logo and text
                 // Add Carousel Slider
                 CarouselSlider(
                   options: CarouselOptions(
-                    height: 200.0,
+                    height: 180.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
                     aspectRatio: 16 / 9,
@@ -118,22 +113,10 @@ class HomePage extends StatelessWidget {
                     viewportFraction: 0.8,
                   ),
                   items: [
-                    Image.asset(
-                      'lib/images/cake1.png',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'lib/images/cake2.png',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'lib/images/cake3.png',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'lib/images/cake4.png',
-                      fit: BoxFit.cover,
-                    ),
+                    _buildCarouselItem('lib/images/cake1.png'),
+                    _buildCarouselItem('lib/images/cake2.png'),
+                    _buildCarouselItem('lib/images/cake3.png'),
+                    _buildCarouselItem('lib/images/cake4.png'),
                   ],
                 ),
                 SizedBox(height: 50), // Add space between carousel and buttons
@@ -163,7 +146,6 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     );
-
                     // Implement Another One action
                   },
                 ),
@@ -174,14 +156,24 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => AboutUsPage()),
-                    );// Implement About Us action
+                    ); // Implement About Us action
                   },
                 ),
               ],
             ),
           ),
-
         ],
+      ),
+    );
+  }
+
+  Widget _buildCarouselItem(String imagePath) {
+    return Container(
+      width: double.infinity,
+      height: 150.0, // Adjust the height as needed
+      child: Image.asset(
+        imagePath,
+        fit: BoxFit.cover,
       ),
     );
   }
