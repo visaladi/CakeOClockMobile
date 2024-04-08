@@ -66,6 +66,8 @@ flutter:
     - lib/images/cake2.png
     - lib/images/cake3.png
     - lib/images/cake4.png
+    - lib/images/background.png
+    - lib/images/home.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
