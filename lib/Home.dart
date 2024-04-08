@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white, // Set background color to white
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -52,6 +53,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.grey, // Set background color to grey
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
