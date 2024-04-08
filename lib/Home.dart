@@ -13,16 +13,20 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white, // Set background color to white
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Image.asset(
-              'lib/images/logo.png', // Adjust the path according to your image location
-              fit: BoxFit.contain,
-              height: 40,
-              width: 40, // Adjust the height as needed
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Image.asset(
+                'lib/images/logo.png',
+                fit: BoxFit.contain,
+                height: 40,
+                width: 40,
+              ),
             ),
-            SizedBox(width: 68), // Add some space between logo and text
+            SizedBox(width: 8),
             Text("Cake O' Clock"),
           ],
         ),
@@ -30,7 +34,6 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.login),
             onPressed: () {
-              // Implement login action
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -45,12 +48,12 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.home),
             onPressed: () {
               Navigator.pop(context);
-              // Implement home button action
             },
           ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.grey, // Set background color to grey
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -65,7 +68,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 );
-                // Implement home action
               },
             ),
             IconButton(
@@ -79,7 +81,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 );
-                // Implement orders action
               },
             ),
           ],
@@ -89,77 +90,76 @@ class HomePage extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.white, Colors.grey],
+              image: DecorationImage(
+                image: AssetImage("lib/images/home.png"),
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
               ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 5), // Add space for logo and text
-                // Add Carousel Slider
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 180.0,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    viewportFraction: 0.8,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      height: 180.0,
+                      enlargeCenterPage: true,
+                      autoPlay: true,
+                      aspectRatio: 16 / 9,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enableInfiniteScroll: true,
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      viewportFraction: 0.8,
+                    ),
+                    items: [
+                      _buildCarouselItem('lib/images/cake1.png'),
+                      _buildCarouselItem('lib/images/cake2.png'),
+                      _buildCarouselItem('lib/images/cake3.png'),
+                      _buildCarouselItem('lib/images/cake4.png'),
+                    ],
                   ),
-                  items: [
-                    _buildCarouselItem('lib/images/cake1.png'),
-                    _buildCarouselItem('lib/images/cake2.png'),
-                    _buildCarouselItem('lib/images/cake3.png'),
-                    _buildCarouselItem('lib/images/cake4.png'),
-                  ],
-                ),
-                SizedBox(height: 50), // Add space between carousel and buttons
-                // Buttons
-                RoundedButton(
-                  text: 'Bake It',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WebViewPage(
-                          url: 'https://cakeoclockwebclient.azurewebsites.net/',
+                  SizedBox(height: 50),
+                  RoundedButton(
+                    text: 'Bake It',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WebViewPage(
+                            url: 'https://cakeoclockwebclient.azurewebsites.net/',
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: 20), // Add space between buttons
-                RoundedButton(
-                  text: 'Menu',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MenuPage(
-                          url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
+                      );
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  RoundedButton(
+                    text: 'Menu',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MenuPage(
+                            url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
+                          ),
                         ),
-                      ),
-                    );
-                    // Implement Another One action
-                  },
-                ),
-                SizedBox(height: 20), // Add space between buttons
-                RoundedButton(
-                  text: 'About Us',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AboutUsPage()),
-                    ); // Implement About Us action
-                  },
-                ),
-              ],
+                      );
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  RoundedButton(
+                    text: 'About Us',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AboutUsPage()),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -170,7 +170,7 @@ class HomePage extends StatelessWidget {
   Widget _buildCarouselItem(String imagePath) {
     return Container(
       width: double.infinity,
-      height: 150.0, // Adjust the height as needed
+      height: 150.0,
       child: Image.asset(
         imagePath,
         fit: BoxFit.cover,
@@ -193,10 +193,10 @@ class RoundedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey[800], // Button color
+        backgroundColor: Colors.grey[800],
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30), // Rounded edges
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
       child: Text(
