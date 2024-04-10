@@ -1,12 +1,11 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'About Us.dart';
 import 'Homeweb.dart';
 import 'Login.dart';
 import 'Menu.dart';
 import 'Orders.dart';
+import 'About Us.dart';
 import 'WebView.dart';
 
 class HomePage extends StatelessWidget {
@@ -78,8 +77,7 @@ class HomePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => OrdersPage(
-                      url:
-                          'https://cakeoclockwebclient.azurewebsites.net/tracking',
+                      url: 'https://cakeoclockwebclient.azurewebsites.net/tracking',
                     ),
                   ),
                 );
@@ -130,8 +128,7 @@ class HomePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => WebViewPage(
-                            url:
-                                'https://cakeoclockwebclient.azurewebsites.net/',
+                            url: 'https://cakeoclockwebclient.azurewebsites.net/',
                           ),
                         ),
                       );
@@ -145,8 +142,7 @@ class HomePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => MenuPage(
-                            url:
-                                'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
+                            url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
                           ),
                         ),
                       );
