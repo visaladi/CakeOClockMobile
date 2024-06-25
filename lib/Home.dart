@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:url_launcher/url_launcher.dart'; // Add this import
 import 'orders_page.dart';
 import 'custom_order_page.dart';
 import 'home_web_page.dart';
@@ -88,18 +87,18 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("lib/images/home.png"),
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("lib/images/home.png"),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                ),
               ),
-            ),
-            child: Center(
-              child: SingleChildScrollView( // Allow scroll for smaller screens
+              child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,10 +123,10 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 40),
-                    // Grid of Buttons
                     GridView.count(
-                      shrinkWrap: true, // Make sure it fits within the scroll view
-                      crossAxisCount: 2, // 2 buttons per row
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
                       mainAxisSpacing: 20.0,
                       crossAxisSpacing: 20.0,
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -137,42 +136,36 @@ class HomePage extends StatelessWidget {
                           'Bake It',
                           Icons.cake,
                           CustomOrderPage(url: 'https://cakeoclockwebclient.azurewebsites.net/CustomOrder'),
-                          'https://cakeoclockwebclient.azurewebsites.net/CustomOrder',
                         ),
                         _buildGridButton(
                           context,
                           'Home',
                           Icons.home,
                           HomeWebPage(url: 'https://cakeoclockwebclient.azurewebsites.net'),
-                          'https://cakeoclockwebclient.azurewebsites.net',
                         ),
                         _buildGridButton(
                           context,
                           'About Us',
                           Icons.info,
                           AboutUsPage(url: 'https://cakeoclockwebclient.azurewebsites.net/About'),
-                          'https://cakeoclockwebclient.azurewebsites.net/About',
                         ),
                         _buildGridButton(
                           context,
                           'Tracking',
                           Icons.track_changes,
                           TrackingPage(url: 'https://cakeoclockwebclient.azurewebsites.net/tracking'),
-                          'https://cakeoclockwebclient.azurewebsites.net/tracking',
                         ),
                         _buildGridButton(
                           context,
                           'Contact',
                           Icons.contact_mail,
                           ContactPage(url: 'https://cakeoclockwebclient.azurewebsites.net/Contactus'),
-                          'https://cakeoclockwebclient.azurewebsites.net/Contactus',
                         ),
                         _buildGridButton(
                           context,
                           'Categories',
                           Icons.category,
                           CategoriesPage(url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage'),
-                          'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
                         ),
                       ],
                     ),
@@ -180,8 +173,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -197,40 +190,28 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Modified button to have icon above the text and to use URL launcher for external links
-  Widget _buildGridButton(BuildContext context, String text, IconData icon, Widget page, String url) {
+  Widget _buildGridButton(BuildContext context, String text, IconData icon, Widget page) {
     return ElevatedButton(
-      onPressed: () async {
-        if (Uri.parse(url).isAbsolute && url.contains('http')) {
-          // If the URL is an absolute web URL, launch it in the browser
-          if (await canLaunch(url)) {
-            await launch(url);
-          } else {
-            throw 'Could not launch $url';
-          }
-        } else {
-          // Otherwise, navigate to the provided page within the app
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => page,
-            ),
-          );
-        }
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.grey[800],
-        // Reduced padding to make the button height smaller
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Square rounded edges
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child: Column( // Arrange icon and text vertically
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 40, color: Colors.white), // Icon on top
-          SizedBox(height: 8), // Spacing between icon and text
+          Icon(icon, size: 40, color: Colors.white),
+          SizedBox(height: 8),
           Text(
             text,
             style: TextStyle(
