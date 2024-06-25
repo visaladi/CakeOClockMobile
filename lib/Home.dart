@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'Homeweb.dart';
+import 'package:url_launcher/url_launcher.dart'; // Add this import
+import 'orders_page.dart';
+import 'custom_order_page.dart';
+import 'home_web_page.dart';
+import 'about_us_page.dart';
+import 'tracking_page.dart';
+import 'contact_page.dart';
+import 'categories_page.dart';
 import 'Login.dart';
-import 'Menu.dart';
-import 'Orders.dart';
-import 'About Us.dart';
-import 'WebView.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -63,7 +65,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomewebPage(
+                    builder: (context) => HomeWebPage(
                       url: 'https://cakeoclockwebclient.azurewebsites.net/',
                     ),
                   ),
@@ -77,7 +79,7 @@ class HomePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => OrdersPage(
-                      url: 'https://cakeoclockwebclient.azurewebsites.net/tracking',
+                      url: 'https://cakeoclockwebclient.azurewebsites.net/cart',
                     ),
                   ),
                 );
@@ -97,68 +99,85 @@ class HomePage extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: 180.0,
-                      enlargeCenterPage: true,
-                      autoPlay: true,
-                      aspectRatio: 16 / 9,
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enableInfiniteScroll: true,
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: 0.8,
+              child: SingleChildScrollView( // Allow scroll for smaller screens
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 20),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 180.0,
+                        enlargeCenterPage: true,
+                        autoPlay: true,
+                        aspectRatio: 16 / 9,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enableInfiniteScroll: true,
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        viewportFraction: 0.8,
+                      ),
+                      items: [
+                        _buildCarouselItem('lib/images/cake1.png'),
+                        _buildCarouselItem('lib/images/cake2.png'),
+                        _buildCarouselItem('lib/images/cake3.png'),
+                        _buildCarouselItem('lib/images/cake4.png'),
+                      ],
                     ),
-                    items: [
-                      _buildCarouselItem('lib/images/cake1.png'),
-                      _buildCarouselItem('lib/images/cake2.png'),
-                      _buildCarouselItem('lib/images/cake3.png'),
-                      _buildCarouselItem('lib/images/cake4.png'),
-                    ],
-                  ),
-                  SizedBox(height: 50),
-                  RoundedButton(
-                    text: 'Bake It',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WebViewPage(
-                            url: 'https://cakeoclockwebclient.azurewebsites.net/',
-                          ),
+                    SizedBox(height: 40),
+                    // Grid of Buttons
+                    GridView.count(
+                      shrinkWrap: true, // Make sure it fits within the scroll view
+                      crossAxisCount: 2, // 2 buttons per row
+                      mainAxisSpacing: 20.0,
+                      crossAxisSpacing: 20.0,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      children: [
+                        _buildGridButton(
+                          context,
+                          'Bake It',
+                          Icons.cake,
+                          CustomOrderPage(url: 'https://cakeoclockwebclient.azurewebsites.net/CustomOrder'),
+                          'https://cakeoclockwebclient.azurewebsites.net/CustomOrder',
                         ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  RoundedButton(
-                    text: 'Menu',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MenuPage(
-                            url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
-                          ),
+                        _buildGridButton(
+                          context,
+                          'Home',
+                          Icons.home,
+                          HomeWebPage(url: 'https://cakeoclockwebclient.azurewebsites.net'),
+                          'https://cakeoclockwebclient.azurewebsites.net',
                         ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  RoundedButton(
-                    text: 'About Us',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AboutUsPage()),
-                      );
-                    },
-                  ),
-                ],
+                        _buildGridButton(
+                          context,
+                          'About Us',
+                          Icons.info,
+                          AboutUsPage(url: 'https://cakeoclockwebclient.azurewebsites.net/About'),
+                          'https://cakeoclockwebclient.azurewebsites.net/About',
+                        ),
+                        _buildGridButton(
+                          context,
+                          'Tracking',
+                          Icons.track_changes,
+                          TrackingPage(url: 'https://cakeoclockwebclient.azurewebsites.net/tracking'),
+                          'https://cakeoclockwebclient.azurewebsites.net/tracking',
+                        ),
+                        _buildGridButton(
+                          context,
+                          'Contact',
+                          Icons.contact_mail,
+                          ContactPage(url: 'https://cakeoclockwebclient.azurewebsites.net/Contactus'),
+                          'https://cakeoclockwebclient.azurewebsites.net/Contactus',
+                        ),
+                        _buildGridButton(
+                          context,
+                          'Categories',
+                          Icons.category,
+                          CategoriesPage(url: 'https://cakeoclockwebclient.azurewebsites.net/ProductsPage'),
+                          'https://cakeoclockwebclient.azurewebsites.net/ProductsPage',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -177,44 +196,52 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
 
-class RoundedButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-
-  const RoundedButton({
-    required this.text,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  // Modified button to have icon above the text and to use URL launcher for external links
+  Widget _buildGridButton(BuildContext context, String text, IconData icon, Widget page, String url) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: () async {
+        if (Uri.parse(url).isAbsolute && url.contains('http')) {
+          // If the URL is an absolute web URL, launch it in the browser
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch $url';
+          }
+        } else {
+          // Otherwise, navigate to the provided page within the app
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => page,
+            ),
+          );
+        }
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.grey[800],
-        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+        // Reduced padding to make the button height smaller
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(10), // Square rounded edges
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+      child: Column( // Arrange icon and text vertically
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 40, color: Colors.white), // Icon on top
+          SizedBox(height: 8), // Spacing between icon and text
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
-  }
-}
-
-void _launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }
